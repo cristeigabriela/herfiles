@@ -1,0 +1,10 @@
+@keyframes bracket-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.monaco-editor .bracket-match {
+  animation: bracket-pulse 1s ease-in-out infinite !important;
+  border: 1px solid #DA70D6 !important;
+  background: rgba(218,112,214,0.15) !important;
+}

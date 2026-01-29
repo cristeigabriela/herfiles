@@ -1,0 +1,117 @@
+{
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "breadcrumbs.enabled": false,
+    "claudeCode.preferredLocation": "sidebar",
+    "custom-ui-style.electron": {
+        "titleBarStyle": "hiddenInset",
+        "trafficLightPosition": {
+            "x": 20,
+            "y": 16
+        }
+    },
+    "custom-ui-style.font.sansSerif": "DankMono Nerd Font",
+    "custom-ui-style.stylesheet": {
+        ".editor-widget.find-widget": "box-shadow: none; border-radius: 4px",
+        ".monaco-action-bar.quick-input-inline-action-bar": "display: none",
+        ".monaco-editor .cursors-layer .cursor": "background-image: linear-gradient(135deg, #ffaffc 10%, #DA70D6 100%)",
+        ".monaco-editor .margin-view-overlays .line-numbers": "color: #b9babd !important",
+        ".monaco-editor .scroll-decoration": "display: none",
+        ".monaco-editor .view-overlays .current-line": "background: linear-gradient(90deg, rgba(218,112,214,0.10) 0%, transparent 100%) !important",
+        ".monaco-list-row:active": "background: linear-gradient(90deg, rgba(218,112,214,0.3) 0%, transparent 70%) !important",
+        ".monaco-list-row:hover": "background: linear-gradient(90deg, rgba(218,112,214,0.1) 0%, transparent 70%) !important",
+        ".monaco-list-row.focused": "outline: none !important",
+        ".monaco-list-row.focused.selected": "background: linear-gradient(90deg, rgba(218,112,214,0.2) 0%, transparent 70%) !important",
+        ".monaco-list-row.selected": "background: linear-gradient(90deg, rgba(218,112,214,0.15) 0%, transparent 70%) !important",
+        ".monaco-scrollable-element > .shadow.top": "display: none",
+        ".monaco-workbench .monaco-list:not(.element-focused):focus:before": "outline: none !important",
+        ".monaco-workbench .part.editor > .content .editor-group-container > .title > .label-container > .title-label": "padding-left: 60px",
+        ".monaco-workbench .part.editor > .content .editor-group-container > .title.title-border-bottom:after": "display: none",
+        ".notification-toast": "box-shadow: none !important",
+        ".quick-input-list .scrollbar": "display: none",
+        ".quick-input-titlebar": "background: #100B15 !important",
+        ".quick-input-widget": "top: 25vh !important",
+        ".quick-input-widget.show-file-icons": "box-shadow: none !important",
+        ".sidebar": "border: none !important",
+        ".sidebar .title-label": "padding: 0 !important",
+        ".title .monaco-icon-label:after": "margin-right: 0",
+        ".title .monaco-icon-label.file-icon": "margin: 0 60px",
+        ".title-actions": "display: none !important",
+        ".title.show-file-icons .label-container .monaco-icon-label.file-icon": "justify-content: center; padding: 0 !important"
+    },
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.detectIndentation": true,
+    "editor.fontFamily": "DankMono Nerd Font",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "editor.mouseWheelZoom": true,
+    "editor.quickSuggestions": {
+        "comments": "off",
+        "other": "on",
+        "strings": "off"
+    },
+    "editor.quickSuggestionsDelay": 1,
+    "editor.renderWhitespace": "none",
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.showFoldingControls": "always",
+    "editor.stickyScroll.enabled": false,
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 4,
+    "explorer.compactFolders": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.decorations.badges": false,
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "onFocusChange",
+    "git.decorations.enabled": false,
+    "python.createEnvironment.trigger": "off",
+    "ruff.nativeServer": "on",
+    // NOTE(gabriela): this is responsible for making cargo check artifacts
+    // not override build ones. if you remove this u die irl (wholesome)
+    "rust-analyzer.cargo.targetDir": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "vscode_custom_css.imports": [
+        "file:///{{HERFILES_HOME}}/.herfiles/.herfiles/.vscode/line-number-gradient.js",
+        "file:///{{HERFILES_HOME}}/.herfiles/.herfiles/.vscode/bracket-pulse.css"
+    ],
+    "window.commandCenter": false,
+    "window.title": " ",
+    "window.zoomLevel": 2,
+    "workbench.activityBar.location": "top",
+    "workbench.colorCustomizations": {
+        "editorCursor.background": "#000000",
+        "editorOverviewRuler.addedForeground": "#0000",
+        "editorOverviewRuler.border": "#0000",
+        "editorOverviewRuler.deletedForeground": "#0000",
+        "editorOverviewRuler.errorForeground": "#0000",
+        "editorOverviewRuler.findMatchForeground": "#0000",
+        "editorOverviewRuler.infoForeground": "#0000",
+        "editorOverviewRuler.modifiedForeground": "#0000",
+        "editorOverviewRuler.rangeHighlightForeground": "#0000",
+        "editorOverviewRuler.selectionHighlightForeground": "#0000",
+        "editorOverviewRuler.warningForeground": "#0000",
+        "editorOverviewRuler.wordHighlightForeground": "#0000",
+        "editorOverviewRuler.wordHighlightStrongForeground": "#0000"
+    },
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.editor.showTabs": "multiple",
+    "workbench.iconTheme": "vscode-celestial-magic-girl-icon-theme",
+    "workbench.productIconTheme": "bongocat",
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "workbench.startupEditor": "none",
+    "workbench.tips.enabled": false,
+    "workbench.tree.enableStickyScroll": true,
+    "workbench.tree.indent": 8,
+    "workbench.tree.renderIndentGuides": "none",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    }
+}

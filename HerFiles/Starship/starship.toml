@@ -1,0 +1,83 @@
+# Minimal & Chic Starship Config
+
+# Hardcoded gradient for "gabriela" with padding = 10 chars
+# White (#FFFFFF) → Black (#000000) → White (#FFFFFF)
+# Background fades: white → black → white
+# Foreground fades: black → white → black (opposite)
+
+format = """$fill$cmd_duration
+[○](white) [ ](bg:#FFFFFF fg:#000000)[g](bg:#DDDDDD fg:#000000)[a](bg:#AAAAAA fg:#000000)[b](bg:#777777 fg:#FFFFFF)[r](bg:#444444 fg:#FFFFFF)[i](bg:#444444 fg:#FFFFFF)[e](bg:#777777 fg:#FFFFFF)[l](bg:#AAAAAA fg:#000000)[a](bg:#DDDDDD fg:#000000)[ ](bg:#FFFFFF fg:#000000) $directory$fill$git_branch$git_status
+$character"""
+
+# Adds space between left and right
+[fill]
+symbol = " "
+
+# Unfilled prompt character - square aesthetic
+[character]
+success_symbol = "[∴](white)"
+error_symbol = "[∴](red)"
+
+# Disable username module since we hardcoded it
+[username]
+disabled = true
+
+# Minimal directory - just the current folder
+[directory]
+format = "[$path]($style) "
+style = "white"
+truncation_length = 1
+truncate_to_repo = false
+
+# Git branch - right side, minimal
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = ""
+style = "dimmed white"
+
+# Git status - compact indicators
+[git_status]
+format = "[$all_status$ahead_behind]($style)"
+style = "dimmed white"
+conflicted = "!"
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
+untracked = "?"
+stashed = "≡"
+modified = "~"
+staged = "+"
+deleted = "-"
+
+# Command duration - appears on right after execution
+[cmd_duration]
+min_time = 500
+format = "[ execution finished in $duration ](bg:#FFFFFF fg:#000000)"
+
+# Disable modules we don't need for minimal look
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[package]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[java]
+disabled = true
+
+[docker_context]
+disabled = true

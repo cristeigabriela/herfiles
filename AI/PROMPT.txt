@@ -1,0 +1,51 @@
+I want to make a Windows-specific pair of scripts to manage my dotfiles. You can generate multiple PowerShell files to improve the ease of project organization, organized around 2 PowerShell commands that we will implement:
+
+- Gather-DotFiles
+- Install-DotFiles
+
+This script should have no non-trivial external dependencies, as it should be runnable on a fresh system. It should also not depend on any environment preset like Developer Command Prompt.
+
+The system should be trivially extendable in the future. Ideally, separate each "module" to be managed (eg. PowerShell config, Starship config, etc.) into it's own file. They, should have the utility to gather (eg. Gather-StarshipFiles) and install (eg. Install-StarshipFiles), and these utilities should be used in the "gather" and "install"-dotfiles utilities.
+
+Generate the project in this directory.
+
+Gather utilities should take as an argument, the place to extract, and Install utilities should take as an argument, the place to install.
+
+However, some modules might need multiple paths, and that's ok, just make them take multiple arguments
+
+The default should be in $HOME\.herfiles
+
+Look at each file when generating their gather/install respective module (or including submodules, if the configurations rely on extra files that need to be managed). For JSON files, parse them as JSON. If you see `file://` links, assume that you need to manage them yourself. If they contain patterns such as containing the $HOME path, identify it and make it so that it gets gathered non-concretely, and it gets filled out with the respective $HOME on the Install, to be user-independant.
+
+The Gather-DotFiles command should have an optional argument that is going to be the path to gather to. By default, it should gather in a folder in the PWD called "HerFiles". Install should be the same.
+
+Each module should be similar, and gather into their own folder in the HerFiles (or otherwise if specified) folder. (eg. HerFiles\Starship, HerFiles\Code)
+
+If supported, each Install- module, if it corresponds to a program (excluding PowerShell), should check if the program is installed by checking if it is in $env:PATH. For example, for Starship you would do:
+
+> $cmd = Get-Command starship
+> // check $? to see if it was True or False
+
+and if it returns True, it's installed. 
+
+If False, prompt to install using `winget`. If the user refuses the prompt, don't install the dotfiles.
+
+When replacing a file in Install, and it already exists on the side, compare file hash. If it's the same, skip (and notify.) If it's not, present the difference and include the file creation times and last edit times in a structured, easy to read way, and prompt whether the user wants to override or not. Do not short circuit if the user responds no to the prompt. Do this for every file in that scenario.
+
+Make sure to use the print and structured display style and rules of this machine's present $PROFILE, but feel free to experiment. Try to make each module as structured as possible, and try to have a concrete place that is responsible for at least the majority of user interactions and displays, or at least provide utilities to the modules to cleanly present and prompt the user, etc, and not end up getting too messy because of this.
+
+Please do and feel free to experiment with aesthetic stuff within the rules mentioned above. Make the user experience of this as good as possible, and make things pretty without messing up. Try to provide as much USEFUL information to the user as possible (like progress bar for file transfers, or in-process gathering, etc.) Keep it fun!
+
+If you implement stuff like, idk, progress bars, please make sure to recognize patterns (eg. the creation of a progress bar) and break utilities down into a shared module so that they can be reused. Be very careful to follow the DRY principle, and keep organized. Share code where possible. Keep a consistent structure.
+
+
+Make sure  to handle errors as thoroughly as possible, mention when admin rights/elevation is required and prompt it if possible or tell the user to restart as admin.
+
+To begin, you might focus on:
+
+- Managing my user $PROFILE for PowerShell (C:\Users\gabriela\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1)
+- Managing my Starship config (found at C:\Users\gabriela\.config\starship.toml)
+- Managing my VSCode config (C:\Users\gabriela\AppData\Roaming\Code\User\settings.json) and extensions (C:\Users\gabriela\.vscode\extensions\extensions.json) and any other child files that occur there
+	- Parse settings.json and look for keys that may or not contain `file://` paths. Follow the rules described earlier (create a submodule for vscode to manage those, etc). Feel free to investigate extensions more thoroughly and see what would be needed concretely to pass on extensions without issues to an installer.
+
+In the end, create a document called EXTENDING.md that will give context to a future implementor, or AI agent, on the structure of modules, and how to integrate one, with a concrete minimal example.
