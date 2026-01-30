@@ -1,10 +1,11 @@
 [
     {
-        "FileName":  "line-number-gradient.js",
-        "TemplatedPath":  "{{HERFILES_HOME}}\\.herfiles\\.herfiles\\.vscode\\line-number-gradient.js"
+        "FileName":  "line-number-gradient.js"
     },
     {
-        "FileName":  "bracket-pulse.css",
-        "TemplatedPath":  "{{HERFILES_HOME}}\\.herfiles\\.herfiles\\.vscode\\bracket-pulse.css"
+        "FileName":  "indent-guide-gradient.js"
+    },
+    {
+        "FileName":  "bracket-pulse.css"
     }
 ]

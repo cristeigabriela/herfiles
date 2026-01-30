@@ -59,7 +59,6 @@
         "strings": "off"
     },
     "editor.quickSuggestionsDelay": 1,
-    "editor.renderWhitespace": "none",
     "editor.scrollbar.horizontal": "hidden",
     "editor.scrollbar.vertical": "hidden",
     "editor.showFoldingControls": "always",
@@ -69,6 +68,9 @@
     "explorer.compactFolders": false,
     "explorer.confirmDragAndDrop": false,
     "explorer.decorations.badges": false,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
     "extensions.ignoreRecommendations": true,
     "files.autoSave": "onFocusChange",
     "git.decorations.enabled": false,
@@ -79,8 +81,9 @@
     "rust-analyzer.cargo.targetDir": true,
     "security.workspace.trust.untrustedFiles": "open",
     "vscode_custom_css.imports": [
-        "file:///{{HERFILES_HOME}}/.herfiles/.herfiles/.vscode/line-number-gradient.js",
-        "file:///{{HERFILES_HOME}}/.herfiles/.herfiles/.vscode/bracket-pulse.css"
+        "file:///{{HERFILES_HOME}}/.herfiles/.vscode/line-number-gradient.js",
+        "file:///{{HERFILES_HOME}}/.herfiles/.vscode/indent-guide-gradient.js",
+        "file:///{{HERFILES_HOME}}/.herfiles/.vscode/bracket-pulse.css"
     ],
     "window.commandCenter": false,
     "window.title": " ",
@@ -110,8 +113,5 @@
     "workbench.tips.enabled": false,
     "workbench.tree.enableStickyScroll": true,
     "workbench.tree.indent": 8,
-    "workbench.tree.renderIndentGuides": "none",
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
-    }
+    "workbench.tree.renderIndentGuides": "none"
 }

@@ -144,15 +144,30 @@ function Get-InstalledExtensionsList {
 function Process-SettingsForGather {
     <#
     .SYNOPSIS
-        Process settings.json content for gathering (template paths)
+        Process settings.json content for gathering.
+        - Rewrites file:// URIs to canonical install paths
+        - Templates other home directory paths
     #>
     param(
         [Parameter(Mandatory = $true)]
-        [string]$Content
+        [string]$Content,
+
+        [Parameter(Mandatory = $false)]
+        [string[]]$AssetFileNames = @()
     )
 
-    # Template home directory paths
-    $processed = ConvertTo-HerTemplatePath -Content $Content
+    $processed = $Content
+
+    # Rewrite file:// URIs to canonical paths (erase original path, keep filename only)
+    foreach ($fileName in $AssetFileNames) {
+        # Match any file:// URI ending with this filename
+        $pattern = 'file:///[^"]*/' + [regex]::Escape($fileName)
+        $canonicalUri = "file:///{{HERFILES_HOME}}/.herfiles/.vscode/$fileName"
+        $processed = $processed -replace $pattern, $canonicalUri
+    }
+
+    # Template any remaining home directory paths
+    $processed = ConvertTo-HerTemplatePath -Content $processed
 
     return $processed
 }
@@ -167,8 +182,8 @@ function Process-SettingsForInstall {
         [string]$Content
     )
 
-    # Restore template to managed directory path with forward slashes for file:// URIs
-    return ConvertFrom-HerManagedPath -Content $Content -PathStyle "forward"
+    # Restore {{HERFILES_HOME}} to actual home path with forward slashes for file:// URIs
+    return ConvertFrom-HerTemplatePath -Content $Content -PathStyle "forward"
 }
 
 # ============================================================================
@@ -226,8 +241,11 @@ function Gather-VSCodeFiles {
             Write-HerWarning "Could not parse settings.json as JSON: $($_.Exception.Message)"
         }
 
-        # Template the settings content
-        $processedSettings = Process-SettingsForGather -Content $settingsContent
+        # Extract just the filenames for URI rewriting
+        $assetFileNames = $assetPaths | ForEach-Object { Split-Path -Leaf $_ }
+
+        # Template the settings content (rewrites file:// URIs to canonical paths)
+        $processedSettings = Process-SettingsForGather -Content $settingsContent -AssetFileNames $assetFileNames
 
         Set-Content -Path $settingsTargetPath -Value $processedSettings -NoNewline
         Write-HerAction -Action "Gathered" -Target $script:SETTINGS_FILENAME

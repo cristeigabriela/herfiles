@@ -20,6 +20,7 @@ Import-Module $sharedPath -Force -DisableNameChecking
 
 $script:MODULE_NAME = "VSCode.Assets"
 $script:ASSETS_SUBFOLDER = "CustomAssets"
+$script:INSTALL_SUBFOLDER = ".vscode"  # Where assets go under $HOME/.herfiles/
 
 # ============================================================================
 #  UTILITIES
@@ -68,6 +69,35 @@ function Convert-FilePathToUri {
     # Normalize path separators to forward slashes
     $uriPath = $Path -replace '\\', '/'
     return "file:///$uriPath"
+}
+
+function Get-VSCodeAssetInstallPath {
+    <#
+    .SYNOPSIS
+        Get the install path for a custom asset file.
+        Assets are installed to $HOME/.herfiles/.vscode/
+    #>
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$FileName
+    )
+
+    $managedPath = Get-HerManagedPath -PathStyle "forward"
+    return "$managedPath/$script:INSTALL_SUBFOLDER/$FileName"
+}
+
+function Get-VSCodeAssetInstallUri {
+    <#
+    .SYNOPSIS
+        Get the file:// URI for an installed custom asset.
+    #>
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$FileName
+    )
+
+    $path = Get-VSCodeAssetInstallPath -FileName $FileName
+    return "file:///$path"
 }
 
 # ============================================================================
@@ -132,18 +162,16 @@ function Gather-VSCodeCustomAssets {
             Write-HerAction -Action "Gathered" -Target $fileName
             $gatheredCount++
 
-            # Track the templated path for portability
-            $templatedPath = ConvertTo-HerTemplatePath -Content $assetPath
+            # Track just the filename - install location is deterministic
             $manifestEntries += [PSCustomObject]@{
-                FileName      = $fileName
-                TemplatedPath = $templatedPath
+                FileName = $fileName
             }
         } catch {
             Write-HerError "Failed to gather $fileName`: $($_.Exception.Message)"
         }
     }
 
-    # Write a manifest file to track original locations
+    # Write a manifest file to track assets
     if ($manifestEntries.Count -gt 0) {
         $manifestPath = Join-Path $assetsDir "manifest.json"
         $manifestEntries | ConvertTo-Json -Depth 10 | Set-Content -Path $manifestPath
@@ -206,8 +234,9 @@ function Install-VSCodeCustomAssets {
             continue
         }
 
-        # Determine target path - resolve template to managed directory ($HOME/.herfiles)
-        $targetPath = ConvertFrom-HerManagedPath -Content $entry.TemplatedPath
+        # Determine target path - always install to $HOME/.herfiles/.vscode/
+        $managedPath = Get-HerManagedPath
+        $targetPath = Join-Path $managedPath $script:INSTALL_SUBFOLDER | Join-Path -ChildPath $entry.FileName
 
         # Skip if asset already exists on the system
         if (Test-Path $targetPath) {
@@ -223,9 +252,9 @@ function Install-VSCodeCustomAssets {
             New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
         }
 
-        # Read and restore content (any paths inside should also use managed directory)
+        # Read and restore content (any templated paths inside get restored to $HOME)
         $content = Get-Content -Path $sourcePath -Raw
-        $content = ConvertFrom-HerManagedPath -Content $content
+        $content = ConvertFrom-HerTemplatePath -Content $content
 
         # Install the missing asset
         try {
@@ -260,6 +289,8 @@ function Install-VSCodeCustomAssets {
 Export-ModuleMember -Function @(
     'Get-VSCodeCustomAssetPaths'
     'Convert-FilePathToUri'
+    'Get-VSCodeAssetInstallPath'
+    'Get-VSCodeAssetInstallUri'
     'Gather-VSCodeCustomAssets'
     'Install-VSCodeCustomAssets'
 )
