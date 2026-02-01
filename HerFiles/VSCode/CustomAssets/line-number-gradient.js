@@ -19,25 +19,30 @@
   document.head.appendChild(style);
 
   const updateLineNumbers = () => {
-    const lineNumbers = document.querySelectorAll('.monaco-editor .margin-view-overlays .line-numbers');
-    const activeLine = document.querySelector('.monaco-editor .margin-view-overlays .active-line-number');
+    // Handle each editor pane separately
+    const editors = document.querySelectorAll('.monaco-editor');
 
-    if (activeLine && lineNumbers.length) {
-      const activeRect = activeLine.getBoundingClientRect();
-      const activeCenterY = activeRect.top + activeRect.height / 2;
-      const lineHeight = activeRect.height || 20;
-      const fadeLines = 15;
-      const maxDistance = lineHeight * fadeLines;
+    editors.forEach(editor => {
+      const lineNumbers = editor.querySelectorAll('.margin-view-overlays .line-numbers');
+      const activeLine = editor.querySelector('.margin-view-overlays .active-line-number');
 
-      lineNumbers.forEach(ln => {
-        const rect = ln.getBoundingClientRect();
-        const lineY = rect.top + rect.height / 2;
-        const distance = Math.abs(lineY - activeCenterY);
-        // NOTE(gabriela): a clamp here would make sense if it affected anything out of bounds, really
-        const opacity = Math.max(0.15, 1 - (distance / maxDistance));
-        ln.style.opacity = opacity;
-      });
-    }
+      if (activeLine && lineNumbers.length) {
+        const activeRect = activeLine.getBoundingClientRect();
+        const activeCenterY = activeRect.top + activeRect.height / 2;
+        const lineHeight = activeRect.height || 20;
+        const fadeLines = 15;
+        const maxDistance = lineHeight * fadeLines;
+
+        lineNumbers.forEach(ln => {
+          const rect = ln.getBoundingClientRect();
+          const lineY = rect.top + rect.height / 2;
+          const distance = Math.abs(lineY - activeCenterY);
+          // NOTE(gabriela): a clamp here would make sense if it affected anything out of bounds, really
+          const opacity = Math.max(0.15, 1 - (distance / maxDistance));
+          ln.style.opacity = opacity;
+        });
+      }
+    });
 
     requestAnimationFrame(updateLineNumbers);
   };
