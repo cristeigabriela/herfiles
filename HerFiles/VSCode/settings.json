@@ -15,7 +15,7 @@
             "y": 16
         }
     },
-    "custom-ui-style.font.sansSerif": "DankMono Nerd Font",
+    "custom-ui-style.font.sansSerif": "Iosevka",
     "custom-ui-style.stylesheet": {
         ".editor-widget.find-widget": "box-shadow: none; border-radius: 4px",
         ".monaco-action-bar.quick-input-inline-action-bar": "display: none",
@@ -47,7 +47,7 @@
     "editor.cursorBlinking": "solid",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.detectIndentation": true,
-    "editor.fontFamily": "DankMono Nerd Font",
+    "editor.fontFamily": "Iosevka",
     "editor.fontLigatures": true,
     "editor.fontSize": 14,
     "editor.formatOnSave": true,
@@ -80,6 +80,7 @@
     // not override build ones. if you remove this u die irl (wholesome)
     "rust-analyzer.cargo.targetDir": true,
     "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.stickyScroll.enabled": false,
     "vscode_custom_css.imports": [
         "file:///{{HERFILES_HOME}}/.herfiles/.vscode/line-number-gradient.js",
         "file:///{{HERFILES_HOME}}/.herfiles/.vscode/indent-guide-gradient.js",

@@ -28,6 +28,7 @@ pixl-garden.bongocat
 reznikdi.windbg-debug
 rust-lang.rust-analyzer
 subframe7536.custom-ui-style
+tamasfe.even-better-toml
 username918r818.pure-monochrome
 vadimcn.vscode-lldb
 vscodevim.vim
